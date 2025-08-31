@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Index 3</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      text-align: center;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      transition: opacity 0.8s ease;
+    }
+    h1 {
+      font-size: 1.8em;
+      max-width: 80%;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    .fade-out {
+      opacity: 0 !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hari Rabu <br> 03 September 2025</h1>
+  <script>
+    document.body.addEventListener("click", () => {
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "3.html";
+      }, 800);
+    });
+  </script>
+</body>
+</html>
