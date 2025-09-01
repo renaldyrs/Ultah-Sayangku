@@ -205,7 +205,7 @@
       grid-column: span 2;
       /* ambil 2 kolom penuh */
       width: 90%;
-      height: 150px;
+      height: 205px;
       transform: scale(1.05);
       /* efek pop */
     }
@@ -334,7 +334,7 @@
 
   <header>
     <h1>🎉 Selamat Ulang Tahun, Sayangku ❤️</h1>
-    <p>Aku bahagia bisa merayakan hari indah ini denganmu 💕</p>
+    <p>Di hari spesial ini, aku ingin mengucapkan selamat ulang tahun 💕</p>
   </header>
 
   <!-- Gallery -->
@@ -349,11 +349,12 @@
   <!-- Baris 2 -->
   <img src="7.jpg" alt="Foto 4">
   <img src="5.jpg" alt="Foto 5" class="big">
-  <img src="6.jpg" alt="Foto 6">
+ 
 
   <!-- Baris 3 -->
+   <video src="vid4.mp4" autoplay muted loop playsinline class="tall"></video>
   <img src="13.jpg" alt="Foto 7" class="tall">
-  <img src="8.jpg" alt="Foto 8">
+  
   <img src="16.jpg" alt="Foto 9" class="wide">
 
   <!-- Baris 4 -->
@@ -370,6 +371,7 @@
   <!-- Cards -->
   <div>
     <h2>Pesan untukmu ❤️</h2>
+    <h3>❤️ Tuan Putri ❤️</h3>
   </div>
   <div class="card">
     <div class="cards">
@@ -377,7 +379,7 @@
         <div class="flap"></div>
         <div class="message">
           Selamat ulang tahun, sayangku ❤️ <br>
-          Semoga semua doa indah terkabul di tahun ini segera terkabul✨ <br>
+          Semoga semua doamu dan keinginanmu tahun ini segera tercapai iya sayang✨ <br>
           Sehat selalu, bahagia selalu, panjang umur, rezeki lancar, dimudahkan segala urusannya, aamiin 🙏 <br>
         </div>
       </div>
@@ -385,24 +387,57 @@
         <div class="flap"></div>
         <div class="message">
           Kalau kamu capek atau butuh tempat curhat, aku siap dengerin kamu sayang ❤️ <br>
-          Libatkan aku di hidupmu, biar aku bisa nemenin kamu jalani hari-harimu ❤️ <br>
+          Libatkan aku di segala urusanmu, biar aku bisa nemenin kamu untuk jalani hari-harimu ❤️ <br>
           Aku sayang kamu, dan aku pengen kamu bahagia selalu ❤️
         </div>
       </div>
       <div class="envelope">
         <div class="flap"></div>
-        <div class="message">Aku minta maaf iya buat segala yang udah aku perbuat 🙏</div>
+        <div class="message">
+          Aku minta maaf iya sayang belum bisa jadi yang terbaik buat kamu. <br>
+          Aku akan selalu ada di samping kamu, support kamu, dan berusaha jadi yang terbaik buat kamu ❤️ <br>
+          Semoga kita bisa terus bersama, saling support, dan saling jaga sampai akhir hayat kita, aamiin 🙏
+        </div>
       </div>
       <div class="envelope">
         <div class="flap"></div>
-        <div class="message">Semoga lancar umrohnya sekeluarga, aamiin 🙏</div>
+        <div class="message">Aku pengen banget wisuda ada kamu di samping aku. <br>
+          Tapi mau gimana lagi kamu umroh pada hari h wisuda ku. <br>
+          Semoga lancar iya umrohnya, sehat terus di sana, dan semoga kita bisa cepet ketemu lagi ❤️ <br>
+          Jangan lupa doain aku juga ya sayang, biar aku cepet dapet kerjaan biar bisa sesegera mungkin aku bisa melamar kamu, aamiin 🙏
+
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Backsound -->
+<audio id="backsound" autoplay loop hidden>
+  <source src="Best Part.mp3" type="audio/mpeg">
+  Browser kamu tidak mendukung audio.
+</audio>
+
+<!-- Tombol Play muncul kalau autoplay gagal -->
+<button id="playMusic" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  background: #ff4f81;
+  color: white;
+  font-size: 1em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+">▶️ Play Musik</button>
+
   <footer>
-    <p>✨ Bersamamu adalah hadiah terbaik dalam hidupku ✨</p>
-    <button id="openSurprise">💌 Kejutan terakhir 💌</button>
+    <p>Maaf iya belum bisa buat sesuatu yang spesial buat kamu.</p>
+    <p>Tapi aku harap ini bisa bikin kamu senyum-senyum sendiri, dan ngerasa spesial di hari ulang tahun kamu ❤️</p>
+    <button id="openSurprise">💌 Happy Birthday 💌</button>
   </footer>
 
   <script>
@@ -486,6 +521,22 @@
         env.classList.toggle('open');
       });
     });
+
+    const music = document.getElementById("backsound");
+  const btn = document.getElementById("playMusic");
+
+  // Coba autoplay
+  music.play().catch(() => {
+    // Kalau gagal, tampilkan tombol
+    btn.style.display = "block";
+  });
+
+  // Kalau tombol diklik → play musik & sembunyikan tombol
+  btn.addEventListener("click", () => {
+    music.play();
+    btn.style.display = "none";
+  });
+
   </script>
 </body>
 

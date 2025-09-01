@@ -11,31 +11,153 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at top, #ffdde1, #ee9ca7);
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
       color: #fff;
-    }
-    h1 {
-      font-size: 3em;
       text-align: center;
-      line-height: 1.4em;
-      animation: fadeIn 3s ease forwards;
-      text-shadow: 0 0 10px #ff4f81, 0 0 20px #ff7eb3;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
+
+    /* Video background */
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
     }
+
+    .ucapan {
+      z-index: 2;
+      text-align: center;
+      font-size: 1.4em;
+      line-height: 1.6em;
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      text-shadow: black 2px 2px 6px;
+    }
+
+    .ucapan p { margin: 10px 0; 
+    
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 6px;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.1%, 100% { opacity: 0; }
+    }
+
+    /* Tombol Surat */
+    #btnSurat {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 28px;
+      font-size: clamp(0.9em, 3.5vw, 1.1em);
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff4f81, #ff7eb3);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 79, 129, 0.5);
+      z-index: 3;
+      display: none;
+      opacity: 0;
+      transition: all 0.5s ease;
+      animation: none;
+    }
+    #btnSurat.show {
+      display: inline-block;
+      animation: fadeBounce 1s forwards;
+    }
+    @keyframes fadeBounce {
+      0% { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.8); }
+      60% { opacity: 1; transform: translateX(-50%) translateY(-10px) scale(1.05); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+
+    #btnSurat:hover {
+      transform: translateX(-50%) translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 25px rgba(255, 79, 129, 0.7);
+    }
+    #btnSurat:active {
+      transform: translateX(-50%) scale(0.95);
+      box-shadow: 0 2px 12px rgba(255, 79, 129, 0.5);
+    }
+
+    /* Modal backdrop */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    /* Modal content */
+    .modal-content {
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      transform: scale(0.7);
+      opacity: 0;
+      animation: popIn 0.6s forwards;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-content h2 {
+      margin: 0 0 15px;
+      font-size: 1.6em;
+    }
+    .modal-content p {
+      margin: 10px 0;
+      line-height: 1.6em;
+      font-size: 1.1em;
+    }
+    .closeBtn {
+      margin-top: 15px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      background: #ff4f81;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+    .closeBtn:hover {
+      background: #e63e70;
+    }
+
     /* Confetti */
     .confetti {
       position: absolute;
       width: 10px;
       height: 15px;
-      background: red;
       top: -20px;
       opacity: 0.8;
       animation: fall linear forwards;
+      z-index: 2;
     }
     @keyframes fall {
       to {
@@ -43,12 +165,14 @@
         opacity: 1;
       }
     }
+
     /* Balon */
     .balloon {
       position: absolute;
       bottom: -150px;
       border-radius: 50% 50% 45% 45%;
       opacity: 0.9;
+      z-index: 2;
     }
     .string {
       position: absolute;
@@ -62,11 +186,29 @@
   </style>
 </head>
 <body>
-  <h1>🎉 Selamat Ulang Tahun, Sayangku ❤️<br>Terima kasih sudah ada di hidupku 💕</h1>
+  <!-- Video fullscreen -->
+  <video autoplay loop playsinline id="bgVideo">
+    <source src="vid7.mp4" type="video/mp4">
+    Browser kamu tidak mendukung video.
+  </video>
 
-  <audio autoplay loop hidden>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Ucapan -->
+  <div class="ucapan" id="ucapan"></div>
+
+  <!-- Tombol -->
+  <button id="btnSurat">💌 Buka Surat</button>
+
+  <!-- Modal -->
+  <div class="modal" id="modalSurat">
+    <div class="modal-content">
+      <h2>💖 Untukmu Sayangku 💖</h2>
+      <p>Hari ini aku ingin kau tahu...</p>
+      <p>Bahwa setiap detik bersamamu adalah anugerah terindah.</p>
+      <p>Semoga ulang tahun ini membawa senyum, cinta, dan kebahagiaan tanpa akhir. 🌹</p>
+      <p>Aku mencintaimu, sekarang dan selamanya. ❤️</p>
+      <button class="closeBtn" id="closeModal">Tutup</button>
+    </div>
+  </div>
 
   <script>
     // confetti
@@ -105,6 +247,59 @@
       setTimeout(()=> balloon.remove(), duration+500);
     }
     setInterval(createBalloon, 800);
+
+    // Animasi teks ucapan
+    const teksUcapan = [
+      "🎉 Selamat Ulang Tahun, Sayangku ❤️",
+      "Hari ini bukan hanya milikmu,",
+      "tapi juga milik hatiku... 💕",
+      "Terima kasih sudah hadir,",
+      "mewarnai hidupku dengan cinta 🌹",
+      "Semoga bahagia selalu menyertaimu 💖"
+    ];
+
+    let indexKalimat = 0;
+    let indexHuruf = 0;
+    const container = document.getElementById("ucapan");
+
+    function ketik() {
+      if (indexKalimat < teksUcapan.length) {
+        if (indexHuruf < teksUcapan[indexKalimat].length) {
+          container.innerHTML =
+            teksUcapan
+              .slice(0, indexKalimat)
+              .map(line => `<p>${line}</p>`)
+              .join("") +
+            `<p>${teksUcapan[indexKalimat].substring(0, indexHuruf + 1)}<span class="cursor">|</span></p>`;
+          
+          indexHuruf++;
+          setTimeout(ketik, 70);
+        } else {
+          indexKalimat++;
+          indexHuruf = 0;
+          setTimeout(ketik, 1200);
+        }
+      } else {
+        container.innerHTML = teksUcapan.map(line => `<p>${line}</p>`).join("");
+        document.getElementById("btnSurat").classList.add("show");
+      }
+    }
+    ketik();
+
+    // Modal
+    const btnSurat = document.getElementById("btnSurat");
+    const modal = document.getElementById("modalSurat");
+    const closeModal = document.getElementById("closeModal");
+
+    btnSurat.addEventListener("click", () => {
+      modal.style.display = "flex";
+    });
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
   </script>
 </body>
 </html>
