@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Ulang Tahun Sayang ❤️</title>
+  <title>Happy Birthday Sayang ❤️</title>
   <style>
     body {
       margin: 0;
@@ -29,30 +30,43 @@
     /* Overlay */
     .overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.45);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.45);
       z-index: -2;
     }
 
     /* Foto Jatuh */
     .falling-container {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       overflow: hidden;
       z-index: -1;
     }
+
     .falling-img {
       position: absolute;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       animation: fall linear forwards;
     }
+
     @keyframes fall {
-      from { transform: translateY(-120px) rotate(0deg); opacity: 1; }
-      to   { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+      from {
+        transform: translateY(-120px) rotate(0deg);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     header {
@@ -63,16 +77,18 @@
       transform: translateY(20px);
       animation: fadeUp 1.2s ease forwards;
     }
+
     header h1 {
       font-size: 1.3em;
       line-height: 1.4em;
     }
+
     header p {
       font-size: 0.9em;
       opacity: 0.9;
     }
 
-    /* Gallery mobile collage */
+    /* Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -82,59 +98,189 @@
       position: relative;
       z-index: 2;
     }
+
     .gallery img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       transform: scale(0.9);
       opacity: 0;
       animation: fadeIn 1s forwards;
     }
+    .gallery video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9);
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
     .gallery img:hover {
       transform: scale(1.05);
       z-index: 5;
     }
-    .gallery .wide { grid-column: span 2; }
-    .gallery .tall { grid-row: span 2; }
-    .gallery .big { grid-column: span 2; grid-row: span 2; }
+
+    .gallery .wide {
+      grid-column: span 2;
+    }
+
+    .gallery .tall {
+      grid-row: span 2;
+    }
+
+    .gallery .big {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
-    /* Cards */
-    .cards {
+    @media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 200px;
+    gap: 15px;
+  }
+
+  .gallery img {
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  }
+}
+
+    /* Cards selalu 1 kolom */
+    .card {
       display: flex;
       flex-direction: column;
+      /* jadi kolom */
       align-items: center;
-      gap: 12px;
-      padding: 15px;
-      position: relative;
-      z-index: 2;
+      /* rata tengah */
+      gap: 20px;
+      margin: 20px auto;
+      max-width: 400px;
+      /* biar gak terlalu lebar */
+      padding: 10px;
     }
-    .card {
-      background: rgba(255,255,255,0.85);
-      color: #333;
-      padding: 12px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      width: 85%;
-      font-size: 0.9em;
 
-      /* animasi */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 kolom */
+      gap: 20px;
+      width: 100%;
+      max-width: 500px;
+      /* biar gak terlalu melebar */
+      margin: auto;
+    }
+
+    .envelope {
+      position: relative;
+      width: 160px;
+      height: 100px;
+      background: #ff4f81;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.6s ease, transform 0.3s ease;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    .envelope.open {
+      grid-column: span 2;
+      /* ambil 2 kolom penuh */
+      width: 90%;
+      height: 150px;
+      transform: scale(1.05);
+      /* efek pop */
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: #ff1e63;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform 0.6s ease;
+      transform-origin: top;
+    }
+
+    .message {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 0.9em;
+      color: #333;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: top 0.6s ease, opacity 0.6s ease;
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 1s ease forwards;
+    }
+
+    /* Saat terbuka */
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope.open .message {
+      top: 0;
+      opacity: 1;
+    }
+
+    /* Animasi shake */
+    .shake {
+      animation: shakeAnim 0.4s ease;
+    }
+
+    @keyframes shakeAnim {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
+
+      75% {
+        transform: translateX(-3px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
     }
 
     /* Footer */
     footer {
       margin-top: 20px;
       padding: 15px;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255, 255, 255, 0.15);
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
       position: relative;
@@ -145,6 +291,7 @@
       animation: fadeUp 1s ease forwards;
       animation-delay: 2.5s;
     }
+
     button {
       margin-top: 12px;
       padding: 10px 18px;
@@ -156,18 +303,26 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     button:hover {
       background: #ff1e63;
       transform: scale(1.05);
     }
 
-    /* Animasi umum */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- Background Video -->
   <video autoplay muted loop playsinline id="bgVideo">
@@ -182,29 +337,68 @@
     <p>Aku bahagia bisa merayakan hari indah ini denganmu 💕</p>
   </header>
 
-  <!-- Gallery Foto Collage -->
-  <section class="gallery">
-    <img src="2.jpg" alt="Foto 1" class="wide">
-    <img src="1.jpg" alt="Foto 2" class="tall">
-    <img src="4.jpg" alt="Foto 3" class="tall">
-    <img src="5.jpg" alt="Foto 4" class="big">
-    <img src="6.jpg" alt="Foto 5">
-    <img src="7.jpg" alt="Foto 6">
-  </section>
+  <!-- Gallery -->
+ 
 
-  <section class="cards">
-    <div class="card" style="animation-delay:1s;">Selamat ulang tahun, sayangku ❤️</div>
-    <div class="card" style="animation-delay:1.3s;">Semoga semua doa indah terkabul di tahun ini ✨</div>
-    <div class="card" style="animation-delay:1.6s;">Aku minta maaf iya buat segala yang udah aku perbuat ke kamu yang 🙏</div>
-    <div class="card" style="animation-delay:1.9s;">Semoga lancar yang besok umrohmu sekeluarga <br> aammiin🙏</div>
-    <div class="card" style="animation-delay:2.2s;">Maaf iya aku enggak bisa ngasih apa apa ke kamu</div>
-    <div class="card" style="animation-delay:2.5s;">Doain aku iya supaya cepet keterima kerja biar bisa ngelamar kamu sama nikahin kamu secepatnya🙏</div>
-    <div class="card" style="animation-delay:2.8s;"> Kalau kamu capek cerita aja ke aku, <br> 
-      kalau kamu ada masalah cerita aja ke aku,<br> 
-      kalau kamu mau ngobrol cerita aja ke aku,<br> 
-    kalau kamu butuh apapun itu aku disini selalu ada buat kamu sayang.</div>
-    <div class="card" style="animation-delay:3.1s;">Maaf iya aku selalu minta vc terus, minta pap terus, maaf banget iya yang</div>
-  </section>
+  <section class="gallery">
+  <!-- Baris 1 -->
+  <img src="2.jpg" alt="Foto 1" class="wide">
+  <img src="3.jpg" alt="Foto 2">
+  <img src="1.jpg" alt="Foto 3" class="tall">
+
+  <!-- Baris 2 -->
+  <img src="7.jpg" alt="Foto 4">
+  <img src="5.jpg" alt="Foto 5" class="big">
+  <img src="6.jpg" alt="Foto 6">
+
+  <!-- Baris 3 -->
+  <img src="13.jpg" alt="Foto 7" class="tall">
+  <img src="8.jpg" alt="Foto 8">
+  <img src="16.jpg" alt="Foto 9" class="wide">
+
+  <!-- Baris 4 -->
+   <img src="11.jpg" alt="Foto 11" class="tall">
+  <video src="vid3.mp4" autoplay muted loop playsinline class="tall"></video>
+  <img src="12.jpg" alt="Foto 12" class="big">
+  
+  
+  
+  
+</section>
+
+
+  <!-- Cards -->
+  <div>
+    <h2>Pesan untukmu ❤️</h2>
+  </div>
+  <div class="card">
+    <div class="cards">
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="message">
+          Selamat ulang tahun, sayangku ❤️ <br>
+          Semoga semua doa indah terkabul di tahun ini segera terkabul✨ <br>
+          Sehat selalu, bahagia selalu, panjang umur, rezeki lancar, dimudahkan segala urusannya, aamiin 🙏 <br>
+        </div>
+      </div>
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="message">
+          Kalau kamu capek atau butuh tempat curhat, aku siap dengerin kamu sayang ❤️ <br>
+          Libatkan aku di hidupmu, biar aku bisa nemenin kamu jalani hari-harimu ❤️ <br>
+          Aku sayang kamu, dan aku pengen kamu bahagia selalu ❤️
+        </div>
+      </div>
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="message">Aku minta maaf iya buat segala yang udah aku perbuat 🙏</div>
+      </div>
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="message">Semoga lancar umrohnya sekeluarga, aamiin 🙏</div>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <p>✨ Bersamamu adalah hadiah terbaik dalam hidupku ✨</p>
@@ -213,53 +407,51 @@
 
   <script>
     const container = document.getElementById("fallingContainer");
-    const images = [
-      "0B9D3409-D843-4D2C-9D8A-31F8394C2090.JPG",
-"0BAFB301-111B-486D-B274-BF89B44A92EC.JPG",
-"0C8F8094-5F0E-4DED-B6C0-1E0FED3A21A6.JPG",
-"0CC87187-0DF2-422F-9E93-1FEF17A28B8D.JPG",
-"1B152BDA-EE15-413C-BDA8-ECCF67CF3030.JPG",
-"1BB36EE1-8D8C-4EF1-95D5-A7AC633B5173.JPG",
-"1CB11FB9-D3C6-4AFE-93B3-7AF4312E9164.JPG",
-"1FDEC775-A241-46E8-A56C-F9D00F7EEF0E.JPG",
-"2BE303B5-190F-449F-91E6-BF7293EB8251.JPG",
-"2D4CC60A-C06B-4815-A4EE-C5942B14306D.JPG",
-"2EA5982B-BDD6-4670-9446-48D95F01EB3A.JPG",
-"3B04BE86-9B94-4B14-8DF1-929366061AC2.JPG",
-"3F2A8BE6-D9EE-45FA-A131-630CDADB5C02.JPG",
-"3F2AB384-5F1D-4388-97F6-48429B72862F.JPG",
-"4B5D87FC-1EBE-493D-BDA9-0EF40D73451B.JPG",
-"4BD13C6F-6A4B-4D7F-91F1-9E831B531445.JPG",
-"5B973BBB-2307-4A5C-BE70-487AEA245AF2.JPG",
-"6A12202A-69DD-48E8-B650-BD75EE71A404.JPG",
-"6C3A8B1F-5B05-4245-9FCF-AED9EAE6A57C.JPG",
-"6C9D0852-3887-4B60-9EF0-9DE822E7EB1F.JPG",
-"7CDFD9BC-8F3D-4EC4-AE84-A88DF461E8BA.JPG",
-"07D4F6CA-2DD4-451E-BA0D-062EE1B39EA2.JPG",
-"8B150687-4F36-476E-9350-7F20E440A2AA.JPG",
-"8D3DFA51-FAF8-44C8-B761-CC75E28BB524.JPG",
-"15C6A713-2BD6-4996-B201-C2B47B42BC19.JPG",
-"17EECCB5-5299-4251-9F75-B63D1FEA8497.JPG",
-"20C71C14-104C-4C48-9BF4-79BE0842E580.JPG",
-"42F0FF03-8238-4A58-AE18-6BA7DF6E895A.JPG",
-"64F5C719-2AF6-4BDD-9AFB-C17C84F1F693.JPG",
-"81CB5F29-06C6-413E-8F19-14A8E2FA4C3C.JPG",
-"929DDBC9-6892-4233-8177-E7FA6A2A3FEF.JPG",
-"20073C1A-159F-4C90-9609-9EC2AF2D99B9.JPG",
-"226029B6-E4FE-439E-822F-2F3F2D7B59F1.JPG",
-"C418CB30-2480-4983-8D89-03E3B68449B0.JPG",
-"CAC05E2E-542C-4E79-8B69-98D16FC72E45.JPG",
-"D81DECA0-8CEC-49BC-982F-599F2905917A.JPG",
-"DD75B306-4E46-4BBF-8621-D9BB38F0E648.JPG",
-"DD88E24A-F5CC-4EE1-B9B6-A6FFDA185CDF.JPG",
-"DDE12D48-7129-4B0E-96E2-3E9E38FD9D98.JPG",
-"DE1D8267-F468-4526-9E30-9C1F5F4F73D7.JPG",
-"DE91596E-C6B8-4170-95EE-25251C943DC4.JPG",
-"E9B1C81D-B68D-4CBE-BF45-0584FD3231E8.JPG",
-"EE5ADD7C-7D51-47A4-8851-D8945AB0AD01.JPG",
-"F84F6D67-B6A8-4C13-90AB-08A1E5D73590.JPG"
-
-    ];
+    const images = ["0B9D3409-D843-4D2C-9D8A-31F8394C2090.JPG",
+      "0BAFB301-111B-486D-B274-BF89B44A92EC.JPG",
+      "0C8F8094-5F0E-4DED-B6C0-1E0FED3A21A6.JPG",
+      "0CC87187-0DF2-422F-9E93-1FEF17A28B8D.JPG",
+      "1B152BDA-EE15-413C-BDA8-ECCF67CF3030.JPG",
+      "1BB36EE1-8D8C-4EF1-95D5-A7AC633B5173.JPG",
+      "1CB11FB9-D3C6-4AFE-93B3-7AF4312E9164.JPG",
+      "1FDEC775-A241-46E8-A56C-F9D00F7EEF0E.JPG",
+      "2BE303B5-190F-449F-91E6-BF7293EB8251.JPG",
+      "2D4CC60A-C06B-4815-A4EE-C5942B14306D.JPG",
+      "2EA5982B-BDD6-4670-9446-48D95F01EB3A.JPG",
+      "3B04BE86-9B94-4B14-8DF1-929366061AC2.JPG",
+      "3F2A8BE6-D9EE-45FA-A131-630CDADB5C02.JPG",
+      "3F2AB384-5F1D-4388-97F6-48429B72862F.JPG",
+      "4B5D87FC-1EBE-493D-BDA9-0EF40D73451B.JPG",
+      "4BD13C6F-6A4B-4D7F-91F1-9E831B531445.JPG",
+      "5B973BBB-2307-4A5C-BE70-487AEA245AF2.JPG",
+      "6A12202A-69DD-48E8-B650-BD75EE71A404.JPG",
+      "6C3A8B1F-5B05-4245-9FCF-AED9EAE6A57C.JPG",
+      "6C9D0852-3887-4B60-9EF0-9DE822E7EB1F.JPG",
+      "7CDFD9BC-8F3D-4EC4-AE84-A88DF461E8BA.JPG",
+      "07D4F6CA-2DD4-451E-BA0D-062EE1B39EA2.JPG",
+      "8B150687-4F36-476E-9350-7F20E440A2AA.JPG",
+      "8D3DFA51-FAF8-44C8-B761-CC75E28BB524.JPG",
+      "15C6A713-2BD6-4996-B201-C2B47B42BC19.JPG",
+      "17EECCB5-5299-4251-9F75-B63D1FEA8497.JPG",
+      "20C71C14-104C-4C48-9BF4-79BE0842E580.JPG",
+      "42F0FF03-8238-4A58-AE18-6BA7DF6E895A.JPG",
+      "64F5C719-2AF6-4BDD-9AFB-C17C84F1F693.JPG",
+      "81CB5F29-06C6-413E-8F19-14A8E2FA4C3C.JPG",
+      "929DDBC9-6892-4233-8177-E7FA6A2A3FEF.JPG",
+      "20073C1A-159F-4C90-9609-9EC2AF2D99B9.JPG",
+      "226029B6-E4FE-439E-822F-2F3F2D7B59F1.JPG",
+      "C418CB30-2480-4983-8D89-03E3B68449B0.JPG",
+      "CAC05E2E-542C-4E79-8B69-98D16FC72E45.JPG",
+      "D81DECA0-8CEC-49BC-982F-599F2905917A.JPG",
+      "DD75B306-4E46-4BBF-8621-D9BB38F0E648.JPG",
+      "DD88E24A-F5CC-4EE1-B9B6-A6FFDA185CDF.JPG",
+      "DDE12D48-7129-4B0E-96E2-3E9E38FD9D98.JPG",
+      "DE1D8267-F468-4526-9E30-9C1F5F4F73D7.JPG",
+      "DE91596E-C6B8-4170-95EE-25251C943DC4.JPG",
+      "E9B1C81D-B68D-4CBE-BF45-0584FD3231E8.JPG",
+      "EE5ADD7C-7D51-47A4-8851-D8945AB0AD01.JPG",
+      "F84F6D67-B6A8-4C13-90AB-08A1E5D73590.JPG"
+    ]; // ganti list sesuai kebutuhan
 
     function createFallingImage() {
       const img = document.createElement("img");
@@ -277,15 +469,24 @@
     }
     setInterval(createFallingImage, 1500);
 
-    // Tambahkan delay random ke tiap foto gallery
-    document.querySelectorAll(".gallery img").forEach((img, i) => {
-      const delay = Math.random() * 1.5; 
-      img.style.animationDelay = delay + "s";
-    });
-
     document.getElementById("openSurprise").addEventListener("click", () => {
       window.location.href = "surprise.html";
     });
+
+    const envelopes = document.querySelectorAll('.envelope');
+
+    envelopes.forEach(env => {
+      env.addEventListener('click', () => {
+        // Tutup envelope lain
+        envelopes.forEach(e => {
+          if (e !== env) e.classList.remove('open');
+        });
+
+        // Toggle envelope yang diklik
+        env.classList.toggle('open');
+      });
+    });
   </script>
 </body>
+
 </html>

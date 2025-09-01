@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Happy Birthday Sayang ❤️</title>
   <style>
     body {
@@ -13,6 +13,7 @@
       overflow: hidden;
       height: 100vh;
       position: relative;
+      transition: opacity 1s ease;
     }
     #introPage {
       display: flex;
@@ -24,12 +25,12 @@
       position: relative;
     }
     #introPage h1 {
-      font-size: 2.5em;
+      font-size: 6vw;
       margin-bottom: 20px;
       transition: opacity 1s ease;
     }
     #cakeButton {
-      font-size: 6em;
+      font-size: 15vw;
       cursor: pointer;
       display: inline-block;
       transition: transform 0.3s ease;
@@ -38,33 +39,34 @@
       transform: scale(1.2);
     }
 
-    /* Animasi jatuh kue (emoji 🎂 juga bisa) */
+    /* Animasi jatuh kue */
     .fall {
-      animation: fallCake 1.5s forwards;
+      animation: fallCake 2s forwards;
       display: inline-block;
     }
     @keyframes fallCake {
-      to { transform: translateY(120vh) rotate(90deg) scale(0.8); opacity: 0; }
+      20% { transform: translateY(50vh) rotate(20deg) scale(1.1); }
+      60% { transform: translateY(80vh) rotate(-15deg) scale(1); }
+      80% { transform: translateY(95vh) rotate(10deg) scale(0.9); }
+      100% { transform: translateY(120vh) rotate(90deg) scale(0.8); opacity: 0; }
     }
 
-    .fade-out {
-      opacity: 0;
-    }
+    .fade-out { opacity: 0; }
 
     /* Tulisan maaf */
     .sorry {
       position: absolute;
-      font-size: 1.5em;
+      font-size: 1.2em;
       opacity: 0;
       animation: sorryAnim 3s forwards;
       font-weight: bold;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     }
     @keyframes sorryAnim {
-      0%   { transform: scale(0); opacity: 0; }
-      30%  { transform: scale(1.2); opacity: 1; }
-      70%  { transform: scale(1); opacity: 1; }
-      100% { transform: scale(0); opacity: 0; }
+      0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+      30%  { transform: scale(1.3) rotate(10deg); opacity: 1; }
+      70%  { transform: scale(1) rotate(-10deg); opacity: 1; }
+      100% { transform: scale(0) rotate(20deg); opacity: 0; }
     }
 
     /* Balon */
@@ -82,9 +84,20 @@
       background: #555;
       transform: translateX(-50%);
     }
+
+    /* Canvas untuk fireworks */
+    #fireworks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
+  <canvas id="fireworks"></canvas>
+
   <div id="introPage">
     <h1 id="title">🎉 Selamat Ulang Tahun, Sayang ❤️</h1>
     <div id="cakeButton">🎂</div>
@@ -97,10 +110,11 @@
       for (let i = 0; i < count; i++) {
         const sorry = document.createElement("div");
         sorry.classList.add("sorry");
-        sorry.innerText = "Maaf ❤️";
+        sorry.innerText = "Happy Birthday Sayang ❤️";
         sorry.style.color = colors[Math.floor(Math.random()*colors.length)];
         sorry.style.left = Math.random() * window.innerWidth + "px";
         sorry.style.top = Math.random() * window.innerHeight + "px";
+        sorry.style.fontSize = (Math.random()*1.5 + 1) + "em";
         sorry.style.animationDelay = (Math.random()*1.5) + "s";
         document.body.appendChild(sorry);
         setTimeout(()=> sorry.remove(), 4000);
@@ -112,7 +126,7 @@
       balloon.classList.add("balloon");
       const colors = ["#ff4f81","#ff7eb3","#ffb6c1","#a29bfe","#6bc5d2","#ffd700"];
       balloon.style.background = colors[Math.floor(Math.random()*colors.length)];
-      const size = Math.floor(Math.random()*40) + 40;
+      const size = Math.floor(Math.random()*50) + 30;
       balloon.style.width = size + "px";
       balloon.style.height = size*1.3 + "px";
       balloon.style.left = Math.random() * window.innerWidth + "px";
@@ -123,14 +137,83 @@
       balloon.appendChild(string);
       document.body.appendChild(balloon);
 
-      const duration = 5000 + Math.random()*2000;
-      const drift = (Math.random()*100 - 50); // goyang kiri kanan
+      const duration = 6000 + Math.random()*4000;
+      const drift = (Math.random()*150 - 75);
       balloon.animate([
         { transform: "translateY(0) translateX(0) rotate(0deg)" },
         { transform: `translateY(-120vh) translateX(${drift}px) rotate(${Math.random()*60-30}deg)` }
       ], { duration: duration, easing: "ease-in-out", fill: "forwards" });
 
       setTimeout(()=> balloon.remove(), duration+500);
+    }
+
+    // === Fireworks ===
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    let fireworks = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function Firework(x, y) {
+      this.x = x;
+      this.y = y;
+      this.particles = [];
+      const colors = ["#ff4f81","#ffd700","#6bc5d2","#a29bfe","#ffffff"];
+      for (let i=0; i<50; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 5 + 2;
+        this.particles.push({
+          x: x, y: y,
+          vx: Math.cos(angle)*speed,
+          vy: Math.sin(angle)*speed,
+          alpha: 1,
+          color: colors[Math.floor(Math.random()*colors.length)]
+        });
+      }
+    }
+
+    Firework.prototype.update = function() {
+      this.particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05; // gravity
+        p.alpha -= 0.01;
+      });
+    };
+
+    Firework.prototype.draw = function(ctx) {
+      this.particles.forEach(p => {
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+    };
+
+    function animateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((fw, i) => {
+        fw.update();
+        fw.draw(ctx);
+        if (fw.particles.every(p => p.alpha <= 0)) {
+          fireworks.splice(i, 1);
+        }
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+    animateFireworks();
+
+    function launchFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height/2;
+      fireworks.push(new Firework(x, y));
     }
 
     const cake = document.getElementById("cakeButton");
@@ -140,18 +223,24 @@
       cake.classList.add("fall");
       title.classList.add("fade-out");
 
-      // munculkan banyak "maaf"
       createSorryTexts();
 
-      // setelah delay, keluarkan balon
+      // balon
       setTimeout(() => {
         for (let i=0; i<20; i++) {
           setTimeout(createBalloon, i*200);
         }
-      }, 1800);
+      }, 2000);
 
-      // pindah ke main.html
-      setTimeout(()=> window.location.href="main.html", 7000);
+      // fireworks loop
+      let fireworkInterval = setInterval(launchFirework, 600);
+      setTimeout(()=> clearInterval(fireworkInterval), 5000);
+
+      // fade out body sebelum pindah halaman
+      setTimeout(()=> {
+        document.body.style.opacity = "0";
+        setTimeout(()=> window.location.href="main.html", 1000);
+      }, 7000);
     };
   </script>
 </body>
