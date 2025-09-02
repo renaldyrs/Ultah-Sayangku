@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kejutan Terakhir ❤️</title>
   <style>
     body {
@@ -28,17 +28,17 @@
       z-index: -1;
     }
 
-    /* Ucapan */
     .ucapan {
       z-index: 2;
       text-align: center;
-      font-size: clamp(1em, 4vw, 1.4em);
+      font-size: 1.3em;
       line-height: 1.6em;
       max-width: 90%;
       margin: 0 auto;
       padding: 20px;
       text-shadow: black 2px 2px 6px;
     }
+
     .ucapan p { margin: 10px 0; }
 
     .cursor {
@@ -54,7 +54,7 @@
     /* Tombol Surat */
     #btnSurat {
       position: fixed;
-      bottom: 15px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       padding: 12px 28px;
@@ -68,17 +68,27 @@
       z-index: 3;
       display: none;
       opacity: 0;
-      transition: all 0.3s ease;
+      transition: all 0.5s ease;
+      animation: none;
     }
+
     #btnSurat.show {
       display: inline-block;
-      animation: fadeBounce 0.8s forwards;
+      animation: fadeBounce 0.8s forwards, wiggle 2s infinite ease-in-out 1s;
     }
+
     @keyframes fadeBounce {
       0% { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.8); }
       60% { opacity: 1; transform: translateX(-50%) translateY(-10px) scale(1.05); }
       100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
     }
+
+    @keyframes wiggle {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      25% { transform: translateX(-50%) rotate(-3deg); }
+      75% { transform: translateX(-50%) rotate(3deg); }
+    }
+
     #btnSurat:hover {
       transform: translateX(-50%) translateY(-3px) scale(1.05);
       box-shadow: 0 6px 25px rgba(255, 79, 129, 0.7);
@@ -94,42 +104,42 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(5px);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 10;
-      padding: 20px;
     }
 
     /* Modal content */
     .modal-content {
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
       color: #fff;
-      padding: 22px;
+      padding: 25px;
       border-radius: 20px;
-      width: 100%;
-      max-width: 420px;
+      max-width: 85%;
       text-align: center;
       box-shadow: 0 8px 30px rgba(0,0,0,0.4);
       transform: scale(0.7);
       opacity: 0;
       animation: popIn 0.6s forwards;
     }
+
     @keyframes popIn {
       0% { transform: scale(0.7); opacity: 0; }
       60% { transform: scale(1.05); opacity: 1; }
       100% { transform: scale(1); opacity: 1; }
     }
+
     .modal-content h2 {
       margin: 0 0 15px;
-      font-size: 1.6em;
+      font-size: 1.5em;
       text-shadow: black 2px 2px 6px;
     }
     .modal-content p {
       margin: 10px 0;
       line-height: 1.6em;
-      font-size: 1.1em;
+      font-size: 1.05em;
       text-shadow: black 1px 1px 4px;
     }
     .closeBtn {
@@ -220,7 +230,7 @@
       document.body.appendChild(confetti);
       setTimeout(()=> confetti.remove(), 6000);
     }
-    setInterval(createConfetti, 250); // lebih ringan
+    setInterval(createConfetti, 150);
 
     // balloons
     function createBalloon() {
@@ -245,7 +255,7 @@
 
       setTimeout(()=> balloon.remove(), duration+500);
     }
-    setInterval(createBalloon, 1200); // lebih enak dilihat
+    setInterval(createBalloon, 800);
 
     // Animasi teks ucapan
     const teksUcapan = [
